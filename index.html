@@ -1,4 +1,323 @@
-<!doctypehtml><html lang="pl"><meta charset="UTF-8"><meta content="width=device-width,initial-scale=1"name="viewport"><title>IRONMETRIC – Dziennik Treningowy</title><link href="manifest.json"rel="manifest"><meta content="yes"name="mobile-web-app-capable"><meta content="yes"name="apple-mobile-web-app-capable"><meta content="black-translucent"name="apple-mobile-web-app-status-bar-style"><meta content="#121212"name="theme-color"><link href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><path d='M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='20' y1='50' x2='80' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='22' y='36' width='6' height='28' rx='2' fill='%2300B050'/><rect x='72' y='36' width='6' height='28' rx='2' fill='%2300B050'/><path d='M30 65 L43 32 L50 46 L57 32 L70 65' stroke='%23FFFFFF' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/></svg>"rel="icon"type="image/svg+xml"><link href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='%23121212'/><path d='M50 15 L80 32.5 V67.5 L50 85 L20 67.5 V32.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='30' y1='50' x2='70' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='32' y='40' width='5' height='20' rx='1' fill='%2300B050'/><rect x='63' y='40' width='5' height='20' rx='1' fill='%2300B050'/><path d='M40 60 L48 36 L52 46 L56 36 L64 60' stroke='%23FFFFFF' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/></svg>"rel="apple-touch-icon"><style>:root{--bg-color:#121212;--card-bg:#1e1e1e;--primary:#00B050;--primary-glow:rgba(0, 176, 80, 0.3);--text-main:#ffffff;--text-muted:#aaaaaa;--border:#333333}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background-color:var(--bg-color);color:var(--text-main);margin:0;padding:0;padding-bottom:70px}header{background:linear-gradient(180deg,#1b2a2a 0,#121d1d 100%);padding:12px 15px;text-align:center;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 4px 15px rgba(0,0,0,.4)}.logo-wrapper{display:flex;align-items:center;gap:10px}.logo-svg{width:34px;height:34px;filter:drop-shadow(0 0 8px var(--primary-glow))}.brand-text{display:flex;flex-direction:column;text-align:left}.brand-title{font-size:1.3rem;font-weight:800;letter-spacing:1px;background:linear-gradient(135deg,#fff 40%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}.brand-subtitle{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}.container{padding:15px;max-width:600px;margin:0 auto}.card{background-color:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.2)}h2{font-size:1.1rem;margin-top:0;color:var(--primary)}label{display:block;margin-bottom:5px;color:var(--text-muted);font-size:.9rem}input,select{width:100%;padding:10px;margin-bottom:12px;background-color:#2a2a2a;border:1px solid var(--border);border-radius:6px;color:#fff;font-size:1rem;box-sizing:border-box}button{background-color:var(--primary);color:#fff;border:none;padding:12px;width:100%;border-radius:6px;font-size:1rem;font-weight:700;cursor:pointer;transition:background-color .2s ease,transform .1s ease}button:active{opacity:.8;transform:scale(.99)}.nav-bar{position:fixed;bottom:0;left:0;width:100%;background-color:#1a1a1a;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0;z-index:1000}.nav-item{background:0 0;border:none;color:var(--text-muted);font-size:.8rem;cursor:pointer;text-align:center;flex:1}.nav-item.active{color:var(--primary);font-weight:700}.tab-content{display:none}.tab-content.active{display:block}.result-box{background-color:#252525;padding:10px;border-radius:6px;margin-top:10px;font-size:.9rem}table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}td,th{border:1px solid var(--border);padding:8px;text-align:center}th{background-color:#222}.menu-btn{background-color:#2a2a2a;color:#fff;border:1px solid var(--border);padding:15px;width:100%;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;text-align:left;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}.menu-btn:hover{background-color:#333}.progress-bar-container{background-color:#2a2a2a;border-radius:8px;overflow:hidden;height:24px;width:100%;margin-top:10px;border:1px solid var(--border);position:relative}.progress-bar-fill{background-color:var(--primary);height:100%;width:0%;transition:width .4s ease}.progress-text{position:absolute;width:100%;top:0;left:0;line-height:24px;text-align:center;font-size:.85rem;font-weight:700;color:#fff;text-shadow:1px 1px 2px rgba(0,0,0,.8)}.list-item-cwiczenie{display:flex;justify-content:space-between;align-items:center;background:#333;padding:8px 12px;border-radius:6px;font-size:.9rem;margin-bottom:8px}.btn-small{width:auto;padding:5px 10px;font-size:.8rem;background:#555}</style><div id="onboarding-overlay"style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:var(--bg-color);z-index:9999;flex-direction:column;justify-content:center;align-items:center;padding:25px;box-sizing:border-box;text-align:center"><svg fill="none"viewBox="0 0 100 100"xmlns="http://www.w3.org/2000/svg"style="width:90px;height:90px;margin-bottom:25px;filter:drop-shadow(0 0 12px var(--primary-glow))"><path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z"stroke="#00B050"stroke-width="5"fill="#15241d"/><line stroke="#00B050"stroke-linecap="round"stroke-width="4"x1="20"x2="80"y1="50"y2="50"/><rect fill="#00B050"height="28"rx="2"width="6"x="22"y="36"/><rect fill="#00B050"height="28"rx="2"width="6"x="72"y="36"/><path d="M30 65 L43 32 L50 46 L57 32 L70 65"stroke="#FFFFFF"stroke-width="6"stroke-linecap="round"stroke-linejoin="round"/></svg><h1 style="color:var(--primary);margin-bottom:20px;font-size:2rem;font-weight:800;letter-spacing:1px">IRONMETRIC</h1><p style="color:#ccc;font-size:1rem;line-height:1.6;max-width:450px;margin-bottom:15px">Witaj w aplikacji, która powstała z autentycznej potrzeby. Jej początkiem był dedykowany planer stworzony dla osób pracujących w systemie trzyzmianowym – zaprojektowany tak, by umożliwić utrzymanie regularności treningów pomimo wymagającego grafiku w pracy.<p style="color:#ccc;font-size:1rem;line-height:1.6;max-width:450px;margin-bottom:35px">W miarę rozwoju i dostrzegania nowych potrzeb, narzędzie to płynnie wyewoluowało w pełnoprawny, analityczny dziennik treningowy. Ironmetric to rozwiązanie dla tych, którzy cenią systematyczność i mierzalny progres – bez zbędnych rozpraszaczy.</p><button onclick="zamknijPowitanie()"style="max-width:250px;padding:15px;font-size:1.1rem;box-shadow:0 4px 15px rgba(0,176,80,.3)">Uruchom Dziennik ➔</button></div><header><div class="logo-wrapper"><svg fill="none"viewBox="0 0 100 100"xmlns="http://www.w3.org/2000/svg"class="logo-svg"><path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z"stroke="#00B050"stroke-width="5"fill="#15241d"/><line stroke="#00B050"stroke-linecap="round"stroke-width="4"x1="20"x2="80"y1="50"y2="50"/><rect fill="#00B050"height="28"rx="2"width="6"x="22"y="36"/><rect fill="#00B050"height="28"rx="2"width="6"x="72"y="36"/><path d="M30 65 L43 32 L50 46 L57 32 L70 65"stroke="#FFFFFF"stroke-width="6"stroke-linecap="round"stroke-linejoin="round"/></svg><div class="brand-text"><span class="brand-title">IRONMETRIC</span> <span class="brand-subtitle">Dziennik Treningowy</span></div></div></header><div class="container"><div class="tab-content active"id="tab-dziennik"><div class="card"><h2>Rejestracja aktywności</h2><label>Data Treningu / Dnia:</label> <input id="dziennik-data"type="date"> <label>Kategoria / Partia Mięśniowa:</label> <select id="dziennik-partia"onchange="zmienKategorieDziennika()"></select><div id="sekcja-treningowa"><label>Wybierz Ćwiczenie:</label> <select id="dziennik-cwiczenie"></select> <label>Numer Serii:</label> <select id="dziennik-seria"><option>1<option>2<option>3<option>4<option>5<option>6</select> <label id="label-ciezar">Ciężar (kg):</label> <input id="dziennik-ciezar"type="number"min="0"oninput="obliczWlocie()"step="0.5"placeholder="np. 90"> <label id="label-powt">Powtórzenia:</label><div id="kontener-powt"><select id="dziennik-powt"onchange="obliczWlocie()"><option>1<option>2<option>3<option>4<option>5<option>6<option>7<option selected>8<option>9<option>10<option>11<option>12</select></div><div id="group-rir"><label>Zapas sił w serii (RIR – opcjonalnie):</label> <select id="dziennik-rir"><option value="">-- Brak / Nie dotyczy --<option value="0">RIR 0 (Do odcięcia / Upadek mięśniowy)<option value="1">RIR 1 (1 powtórzenie w zapasie)<option value="2">RIR 2 (2 powtórzenia w zapasie – optymalnie)<option value="3">RIR 3 (3 powtórzenia w zapasie)<option value="4+">RIR 4+ (Bardzo lekko / zapas)</select></div><div class="result-box"id="live-calc">Tonaż: <b>0 kg</b> | Szacowane 1RM (Epley): <b>0 kg</b></div></div><div id="sekcja-regeneracyjna"style="display:none"><label>Wybierz Formę Regeneracji:</label> <select id="dziennik-regeneracja"></select></div><br><button onclick="zapiszIZsynchronizuj()"style="width:100%;background:var(--primary);padding:12px;font-size:1rem;font-weight:700">🔄 Zapisz i Synchronizuj z chmurą</button></div></div><div class="tab-content"id="tab-plany"><div class="card"><h2>Wybierz Gotowy Plan</h2><label>Wybierz schemat:</label> <select id="wybor-planu"onchange="pokazPlan()"><optgroup label="Push / Pull / Legs"><option value="ppl_push">PPL - PUSH (Klatka, Barki, Triceps)<option value="ppl_pull">PPL - PULL (Plecy, Tył barku, Biceps)<option value="ppl_legs">PPL - LEGS (Nogi, Pośladki, Brzuch)<optgroup label="Full Body Workout"><option value="fbw_a">FBW - Wariant A (z Hip Thrust)<option value="fbw_b">FBW - Wariant B (z RDL)<optgroup label="Góra / Dół"><option value="gora">Góra / Dół - GÓRA<option value="dol">Góra / Dół - DÓŁ (Nogi i Pośladki)</select><div class="result-box"id="tresc-planu"style="margin-top:15px;line-height:1.6"></div></div></div><div class="tab-content"id="subtab-historia"><div class="card"><button onclick="wracajDoWiecej()"class="btn-small"style="margin-bottom:15px">⬅ Powrót do menu</button><h2>Analiza Postępów</h2><label>Kategoria / Partia Mięśniowa:</label> <select id="analiza-partia"onchange='aktualizujCwiczenia("analiza")'></select><div id="analiza-wybor-cwiczenia-box"><label>Wybierz Ćwiczenie / Metodę:</label> <select id="analiza-cwiczenie"onchange="zaladujAnalize()"></select></div><div style="display:flex;gap:10px;margin-bottom:12px;margin-top:10px"><div style="flex:1"><label>Od daty:</label><input id="analiza-data-od"type="date"onchange="zmienionoDateOd()"style="margin-bottom:0"></div><div style="flex:1"><label>Do daty:</label><input id="analiza-data-do"type="date"onchange="zmienionoDateDo()"style="margin-bottom:0"></div></div><div class="result-box"id="analiza-podsumowanie">Brak danych dla wybranego elementu.</div><div style="overflow-x:auto;margin-top:15px"><table id="tabela-historii"><tr><th>Data<th>Szczegóły</table></div></div></div><div class="tab-content"id="tab-wiecej"><div class="card"><h2>Więcej Opcji</h2><p style="font-size:.85rem;color:var(--text-muted);margin-bottom:20px">Wybierz sekcję, aby zarządzać celami, bazą lub kopią zapasową.</p><button onclick='przejdzDoPodmenu("historia")'class="menu-btn"><span>📊 Analiza i Historia</span><span>➔</span></button> <button onclick='przejdzDoPodmenu("cele")'class="menu-btn"><span>🎯 Wizualizacja Celów (1RM)</span><span>➔</span></button> <button onclick='przejdzDoPodmenu("baza")'class="menu-btn"><span>🏋️ Zarządzanie Bazą Ćwiczeń</span><span>➔</span></button> <button onclick='przejdzDoPodmenu("instrukcja")'class="menu-btn"><span>📖 Instrukcja Obsługi</span><span>➔</span></button> <button onclick="otworzKontakt()"class="menu-btn"style="border-color:#333;background:#252525;margin-top:10px"><span>✉️ Zgłoś błąd / Kontakt</span><span style="color:var(--text-muted)">➔</span></button> <button onclick='window.open("https://suppi.pl/h75","_blank")'class="menu-btn"style="border-color:var(--primary);background:linear-gradient(135deg,#1e2e22 0,#1a1a1a 100%);margin-top:20px"><span>☕ Postaw mi kawę</span><span style="color:var(--primary)">❤️</span></button></div></div><div class="tab-content"id="subtab-cele"><div class="card"><button onclick="wracajDoWiecej()"class="btn-small"style="margin-bottom:15px">⬅ Powrót do menu</button><h2>Wizualizacja Celów (1RM)</h2><label>Wybierz ćwiczenie do śledzenia:</label> <select id="cel-cwiczenie"onchange="przeliczCel()"></select> <label>Twój docelowy rekord (kg):</label> <input id="cel-wartosc"type="number"min="0"oninput="przeliczCel()"step="1"value="100"><div class="result-box"id="cel-wynik-box"style="margin-top:15px">Obliczanie postępu...</div><div class="progress-bar-container"><div class="progress-bar-fill"id="progress-fill"></div><div class="progress-text"id="progress-text">0%</div></div></div></div><div class="tab-content"id="subtab-baza"><div class="card"><button onclick="wracajDoWiecej()"class="btn-small"style="margin-bottom:15px">⬅ Powrót do menu</button><h2>Baza Ćwiczeń</h2><p style="font-size:.85rem;color:var(--text-muted);margin-bottom:15px;line-height:1.4">Zarządzaj listą ćwiczeń. Możesz dodać nowe kategorie i ćwiczenia. Zmiana nazwy istniejącego ćwiczenia automatycznie zaktualizuje Twoją historię treningów!</p><label>Wybierz Kategorię:</label><div style="display:flex;gap:10px;margin-bottom:15px"><select id="menedzer-kategoria"onchange="odswiezListeMenedzera()"style="margin-bottom:0"></select> <button onclick="dodajKategorie()"class="btn-small"style="padding:0 15px">+ Kat.</button></div><div style="background:#252525;padding:10px;border-radius:6px;margin-bottom:15px"><label>Dodaj nowe ćwiczenie (do wybranej kategorii):</label><div style="display:flex;gap:10px"><input id="nowe-cwiczenie-nazwa"placeholder="Nazwa..."style="margin-bottom:0"> <button onclick="dodajCwiczenie()"class="btn-small"style="width:80px;background:var(--primary)">Dodaj</button></div></div><div id="lista-cwiczen-menedzer"></div></div></div><div class="tab-content"id="subtab-instrukcja"><div class="card"><button onclick="wracajDoWiecej()"class="btn-small"style="margin-bottom:15px">⬅ Powrót do menu</button><h2 style="color:var(--primary);margin-bottom:15px">📖 Instrukcja Obsługi</h2><div style="font-size:.9rem;line-height:1.6;color:#ccc"><p style="color:#fff;font-weight:700;margin-bottom:15px">Witaj w oficjalnej instrukcji obsługi aplikacji <b>IRONMETRIC</b>. Aby zapewnić najwyższy komfort korzystania, pełną płynność oraz dostęp do danych offline, zalecamy zainstalowanie aplikacji jako <b>PWA (Progressive Web App)</b> na swoim telefonie.<br><br><b>Jak zainstalować aplikację (PWA):</b><br>• <b>Android (Chrome):</b> Otwórz aplikację w przeglądarce, kliknij ikonę menu (trzy kropki w prawym górnym rogu) i wybierz opcję <b>„Zainstaluj aplikację”</b> lub <b>„Dodaj do ekranu głównego”</b>.<br>• <b>iOS (Safari):</b> Otwórz aplikację w przeglądarce Safari, kliknij przycisk <b>Udostępnij</b> (kwadrat ze strzałką w górę) na dolnym pasku, a następnie przewiń listę i wybierz <b>„Do ekranu początkowego”</b>.</div></div></div></div><div class="nav-bar"><button onclick='zmienZakladke("dziennik",this)'class="nav-item active">📝 Dziennik</button> <button onclick='zmienZakladke("plany",this)'class="nav-item">📋 Plany</button> <button onclick='zmienZakladke("wiecej",this)'class="nav-item">⚙️ Więcej</button></div><script>function sprawdzPierwszeUruchomienie() {
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRONMETRIC – Dziennik Treningowy</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#121212">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><path d='M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='20' y1='50' x2='80' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='22' y='36' width='6' height='28' rx='2' fill='%2300B050'/><rect x='72' y='36' width='6' height='28' rx='2' fill='%2300B050'/><path d='M30 65 L43 32 L50 46 L57 32 L70 65' stroke='%23FFFFFF' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='%23121212'/><path d='M50 15 L80 32.5 V67.5 L50 85 L20 67.5 V32.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='30' y1='50' x2='70' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='32' y='40' width='5' height='20' rx='1' fill='%2300B050'/><rect x='63' y='40' width='5' height='20' rx='1' fill='%2300B050'/><path d='M40 60 L48 36 L52 46 L56 36 L64 60' stroke='%23FFFFFF' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <style>
+        :root { --bg-color: #121212; --card-bg: #1e1e1e; --primary: #00B050; --primary-glow: rgba(0, 176, 80, 0.3); --text-main: #ffffff; --text-muted: #aaaaaa; --border: #333333; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; padding-bottom: 70px; }
+        header { background: linear-gradient(180deg, #1b2a2a 0%, #121d1d 100%); padding: 12px 15px; text-align: center; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .logo-wrapper { display: flex; align-items: center; gap: 10px; }
+        .logo-svg { width: 34px; height: 34px; filter: drop-shadow(0 0 8px var(--primary-glow)); }
+        .brand-text { display: flex; flex-direction: column; text-align: left; }
+        .brand-title { font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
+        .brand-subtitle { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        h2 { font-size: 1.1rem; margin-top: 0; color: var(--primary); }
+        label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; }
+        select, input { width: 100%; padding: 10px; margin-bottom: 12px; background-color: #2a2a2a; border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 1rem; box-sizing: border-box; }
+        button { background-color: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; }
+        button:active { opacity: 0.8; transform: scale(0.99); }
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; }
+        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; text-align: center; flex: 1; }
+        .nav-item.active { color: var(--primary); font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .result-box { background-color: #252525; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 0.9rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background-color: #222; }
+        .menu-btn { background-color: #2a2a2a; color: white; border: 1px solid var(--border); padding: 15px; width: 100%; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; text-align: left; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .menu-btn:hover { background-color: #333; }
+        .progress-bar-container { background-color: #2a2a2a; border-radius: 8px; overflow: hidden; height: 24px; width: 100%; margin-top: 10px; border: 1px solid var(--border); position: relative; }
+        .progress-bar-fill { background-color: var(--primary); height: 100%; width: 0%; transition: width 0.4s ease; }
+        .progress-text { position: absolute; width: 100%; top: 0; left: 0; line-height: 24px; text-align: center; font-size: 0.85rem; font-weight: bold; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .list-item-cwiczenie { display: flex; justify-content: space-between; align-items: center; background: #333; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 8px; }
+        .btn-small { width: auto; padding: 5px 10px; font-size: 0.8rem; background: #555; }
+    </style>
+</head>
+<body>
+
+    <!-- EKRAN POWITALNY -->
+    <div id="onboarding-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 25px; box-sizing: border-box; text-align: center;">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 90px; height: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 12px var(--primary-glow));">
+            <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" stroke="#00B050" stroke-width="5" fill="#15241d"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#00B050" stroke-width="4" stroke-linecap="round"/>
+            <rect x="22" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+            <rect x="72" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+            <path d="M30 65 L43 32 L50 46 L57 32 L70 65" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 style="color: var(--primary); margin-bottom: 20px; font-size: 2rem; font-weight: 800; letter-spacing: 1px;">IRONMETRIC</h1>
+        <p style="color: #ccc; font-size: 1rem; line-height: 1.6; max-width: 450px; margin-bottom: 15px;">
+            Witaj w aplikacji, która powstała z autentycznej potrzeby. Jej początkiem był dedykowany planer stworzony dla osób pracujących w systemie trzyzmianowym – zaprojektowany tak, by umożliwić utrzymanie regularności treningów pomimo wymagającego grafiku w pracy.
+        </p>
+        <p style="color: #ccc; font-size: 1rem; line-height: 1.6; max-width: 450px; margin-bottom: 35px;">
+            W miarę rozwoju i dostrzegania nowych potrzeb, narzędzie to płynnie wyewoluowało w pełnoprawny, analityczny dziennik treningowy. Ironmetric to rozwiązanie dla tych, którzy cenią systematyczność i mierzalny progres – bez zbędnych rozpraszaczy.
+        </p>
+        <button onclick="zamknijPowitanie()" style="max-width: 250px; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,176,80,0.3);">Uruchom Dziennik ➔</button>
+    </div>
+
+    <header>
+        <div class="logo-wrapper">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" stroke="#00B050" stroke-width="5" fill="#15241d"/>
+                <line x1="20" y1="50" x2="80" y2="50" stroke="#00B050" stroke-width="4" stroke-linecap="round"/>
+                <rect x="22" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <rect x="72" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <path d="M30 65 L43 32 L50 46 L57 32 L70 65" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="brand-text">
+                <span class="brand-title">IRONMETRIC</span>
+                <span class="brand-subtitle">Dziennik Treningowy</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ZAKŁADKA 1: DZIENNIK -->
+        <div id="tab-dziennik" class="tab-content active">
+            <div class="card">
+                <h2>Rejestracja aktywności</h2>
+                <label>Data Treningu / Dnia:</label>
+                <input type="date" id="dziennik-data">
+
+                <label>Kategoria / Partia Mięśniowa:</label>
+                <select id="dziennik-partia" onchange="zmienKategorieDziennika()"></select>
+
+                <div id="sekcja-treningowa">
+                    <label>Wybierz Ćwiczenie:</label>
+                    <select id="dziennik-cwiczenie"></select>
+
+                    <label>Numer Serii:</label>
+                    <select id="dziennik-seria">
+                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                    </select>
+
+                    <label id="label-ciezar">Ciężar (kg):</label>
+                    <input type="number" id="dziennik-ciezar" placeholder="np. 90" step="0.5" min="0" oninput="obliczWlocie()">
+
+                    <label id="label-powt">Powtórzenia:</label>
+                    <div id="kontener-powt">
+                        <select id="dziennik-powt" onchange="obliczWlocie()">
+                            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option selected>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                        </select>
+                    </div>
+
+                    <div id="group-rir">
+                        <label>Zapas sił w serii (RIR – opcjonalnie):</label>
+                        <select id="dziennik-rir">
+                            <option value="">-- Brak / Nie dotyczy --</option>
+                            <option value="0">RIR 0 (Do odcięcia / Upadek mięśniowy)</option>
+                            <option value="1">RIR 1 (1 powtórzenie w zapasie)</option>
+                            <option value="2">RIR 2 (2 powtórzenia w zapasie – optymalnie)</option>
+                            <option value="3">RIR 3 (3 powtórzenia w zapasie)</option>
+                            <option value="4+">RIR 4+ (Bardzo lekko / zapas)</option>
+                        </select>
+                    </div>
+
+                    <div class="result-box" id="live-calc">
+                        Tonaż: <b>0 kg</b> | Szacowane 1RM (Epley): <b>0 kg</b>
+                    </div>
+                </div>
+
+                <div id="sekcja-regeneracyjna" style="display: none;">
+                    <label>Wybierz Formę Regeneracji:</label>
+                    <select id="dziennik-regeneracja"></select>
+                </div>
+
+                <br>
+                <button onclick="zapiszIZsynchronizuj()" style="width:100%; background: var(--primary); padding: 12px; font-size: 1rem; font-weight: bold;">🔄 Zapisz i Synchronizuj</button>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 2: BIBLIOTEKA PLANÓW -->
+        <div id="tab-plany" class="tab-content">
+            <div class="card">
+                <h2>Wybierz Gotowy Plan</h2>
+                <label>Wybierz schemat:</label>
+                <select id="wybor-planu" onchange="pokazPlan()">
+                    <optgroup label="Push / Pull / Legs">
+                        <option value="ppl_push">PPL - PUSH (Klatka, Barki, Triceps)</option>
+                        <option value="ppl_pull">PPL - PULL (Plecy, Tył barku, Biceps)</option>
+                        <option value="ppl_legs">PPL - LEGS (Nogi, Pośladki, Brzuch)</option>
+                    </optgroup>
+                    <optgroup label="Full Body Workout">
+                        <option value="fbw_a">FBW - Wariant A (z Hip Thrust)</option>
+                        <option value="fbw_b">FBW - Wariant B (z RDL)</option>
+                    </optgroup>
+                    <optgroup label="Góra / Dół">
+                        <option value="gora">Góra / Dół - GÓRA</option>
+                        <option value="dol">Góra / Dół - DÓŁ (Nogi i Pośladki)</option>
+                    </optgroup>
+                </select>
+                <div class="result-box" id="tresc-planu" style="margin-top: 15px; line-height: 1.6;"></div>
+            </div>
+        </div>
+
+        <!-- PODMENU: HISTORIA / ANALIZA -->
+        <div id="subtab-historia" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Analiza Postępów</h2>
+                <label>Kategoria / Partia Mięśniowa:</label>
+                <select id="analiza-partia" onchange="aktualizujCwiczenia('analiza')"></select>
+
+                <div id="analiza-wybor-cwiczenia-box">
+                    <label>Wybierz Ćwiczenie / Metodę:</label>
+                    <select id="analiza-cwiczenie" onchange="zaladujAnalize()"></select>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 12px; margin-top: 10px;">
+                    <div style="flex: 1;"><label>Od daty:</label><input type="date" id="analiza-data-od" onchange="zmienionoDateOd()" style="margin-bottom: 0;"></div>
+                    <div style="flex: 1;"><label>Do daty:</label><input type="date" id="analiza-data-do" onchange="zmienionoDateDo()" style="margin-bottom: 0;"></div>
+                </div>
+
+                <div class="result-box" id="analiza-podsumowanie">Brak danych dla wybranego elementu.</div>
+                <div style="overflow-x: auto; margin-top: 15px;">
+                    <table id="tabela-historii"><tr><th>Data</th><th>Szczegóły</th></tr></table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 4: GŁÓWNE MENU "WIĘCEJ" -->
+        <div id="tab-wiecej" class="tab-content">
+            <div class="card">
+                <h2>Więcej Opcji</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Wybierz sekcję, aby zarządzać celami, bazą lub przeczytać instrukcję.</p>
+
+                <button class="menu-btn" onclick="przejdzDoPodmenu('historia')">
+                    <span>📊 Analiza i Historia</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('cele')">
+                    <span>🎯 Wizualizacja Celów (1RM)</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('baza')">
+                    <span>🏋️ Zarządzanie Bazą Ćwiczeń</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('instrukcja')">
+                    <span>📖 Instrukcja Obsługi</span><span>➔</span>
+                </button>
+
+                <button class="menu-btn" style="border-color: #333; background: #252525; margin-top: 10px;" onclick="otworzKontakt()">
+                    <span>✉️ Zgłoś błąd / Kontakt</span><span style="color: var(--text-muted);">➔</span>
+                </button>
+
+                <button class="menu-btn" style="border-color: var(--primary); background: linear-gradient(135deg, #1e2e22 0%, #1a1a1a 100%); margin-top: 20px;" onclick="window.open('https://suppi.pl/h75', '_blank')">
+                    <span>☕ Postaw mi kawę</span><span style="color: var(--primary);">❤️</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PODMENU: KAMIENIE MILOWE -->
+        <div id="subtab-cele" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Wizualizacja Celów (1RM)</h2>
+                <label>Wybierz ćwiczenie do śledzenia:</label>
+                <select id="cel-cwiczenie" onchange="przeliczCel()"></select>
+
+                <label>Twój docelowy rekord (kg):</label>
+                <input type="number" id="cel-wartosc" value="100" step="1" min="0" oninput="przeliczCel()">
+
+                <div class="result-box" id="cel-wynik-box" style="margin-top: 15px;">Obliczanie postępu...</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-text" id="progress-text">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PODMENU: BAZA ĆWICZEŃ -->
+        <div id="subtab-baza" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Baza Ćwiczeń</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height:1.4;">
+                    Zarządzaj listą ćwiczeń. Możesz dodać nowe kategorie i ćwiczenia. Zmiana nazwy istniejącego ćwiczenia automatycznie zaktualizuje Twoją historię treningów!
+                </p>
+
+                <label>Wybierz Kategorię:</label>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <select id="menedzer-kategoria" onchange="odswiezListeMenedzera()" style="margin-bottom: 0;"></select>
+                    <button onclick="dodajKategorie()" class="btn-small" style="padding: 0 15px;">+ Kat.</button>
+                </div>
+
+                <div style="background: #252525; padding: 10px; border-radius: 6px; margin-bottom: 15px;">
+                    <label>Dodaj nowe ćwiczenie (do wybranej kategorii):</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="nowe-cwiczenie-nazwa" placeholder="Nazwa..." style="margin-bottom: 0;">
+                        <button onclick="dodajCwiczenie()" class="btn-small" style="width: 80px; background: var(--primary);">Dodaj</button>
+                    </div>
+                </div>
+
+                <div id="lista-cwiczen-menedzer"></div>
+            </div>
+        </div>
+
+        <!-- PODMENU: INSTRUKCJA OBSŁUGI -->
+        <div id="subtab-instrukcja" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2 style="color: var(--primary); margin-bottom: 15px;">📖 Instrukcja Obsługi</h2>
+                <div style="font-size: 0.9rem; line-height: 1.6; color: #ccc;">
+                    <p style="color: #fff; font-weight: bold; margin-bottom: 15px;">Witaj w oficjalnej instrukcji obsługi aplikacji <b>IRONMETRIC</b>. Aby zapewnić najwyższy komfort korzystania, pełną płynność oraz dostęp do danych offline, zalecamy zainstalowanie aplikacji jako <b>PWA (Progressive Web App)</b> na swoim telefonie.<br><br><b>Jak zainstalować aplikację (PWA):</b><br>• <b>Android (Chrome):</b> Otwórz aplikację w przeglądarce, kliknij ikonę menu (trzy kropki w prawym górnym rogu) i wybierz opcję <b>„Zainstaluj aplikację”</b> lub <b>„Dodaj do ekranu głównego”</b>.<br>• <b>iOS (Safari):</b> Otwórz aplikację w przeglądarce Safari, kliknij przycisk <b>Udostępnij</b> (kwadrat ze strzałką w górę) na dolnym pasku, a następnie przewiń listę i wybierz <b>„Do ekranu początkowego”</b>.</p>
+                    
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">1. 📝 Dziennik (Rejestracja aktywności)</b>
+                        Główny ekran roboczy aplikacji służący do bieżącego zapisywania Twoich treningów siłowych, jednostek cardio oraz dni regeneracyjnych.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>Data Treningu / Dnia:</b> Pozwala wskazać datę, której dotyczy wpis (domyślnie dzisiejsza). Umożliwia bieżące rejestrowanie oraz uzupełnianie zaległych treningów wstecz.</li>
+                            <li style="margin-bottom: 6px;"><b>Kategoria / Partia Mięśniowa:</b> Grupuje ćwiczenia według partii ciała (Klatka, Plecy, Nogi, Pośladki, Barki, Ramiona, Brzuch) oraz trybów specjalnych (Cardio i Regeneracja).</li>
+                            <li style="margin-bottom: 6px;"><b>Wybierz Ćwiczenie:</b> Lista konkretnych ćwiczeń przypisanych do wybranej kategorii.</li>
+                            <li style="margin-bottom: 6px;"><b>Numer Serii:</b> Określa, którą z kolei serię danego ćwiczenia właśnie wykonujesz (od 1 do 6).</li>
+                            <li style="margin-bottom: 6px;"><b>Ciężar (kg) / Czas (min):</b> Nałożony ciężar roboczy w kg (dokładność do 0.5 kg) lub czas trwania wysiłku w minutach dla cardio.</li>
+                            <li style="margin-bottom: 6px;"><b>Powtórzenia / Dystans (km):</b> Liczba powtórzeń wybierana z listy od 1 do 12 (domyślnie 8) lub dystans w km dla cardio.</li>
+                            <li style="margin-bottom: 6px;"><b>Zapas sił (RIR):</b> Rate in Reserve – zapas powtórzeń do technicznego upadku mięśniowego (od RIR 0 do RIR 4+).</li>
+                            <li style="margin-bottom: 6px;"><b>Live-Calc:</b> Automatycznie wylicza tonaż oraz szacowany maksymalny wynik (1RM według Epleya) przed zapisem.</li>
+                            <li><b>Przycisk Zapisz:</b> Zapisuje wpis lokalnie i synchronizuje stan aplikacji.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">2. 📋 Plany (Biblioteka Planów)</b>
+                        Sekcja zawierająca gotowe, sprawdzone systemy i podziały treningowe dla osób na każdym poziomie zaawansowania.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>Wybierz schemat:</b> Przełączaj się pomiędzy systemami (PPL, FBW, Góra / Dół).</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">3. ⚙️ Więcej (Menu Główne Opcji)</b>
+                        Centralny punkt nawigacyjny prowadzący do zaawansowanych modułów analitycznych, celów oraz bazy danych.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>📊 Analiza i Historia:</b> Przeglądanie historii, filtrowanie wg partii, ćwiczenia i zakresu dat (Od / Do). Pokazuje rekordy 1RM, max ciężar, łączny tonaż oraz tabelę wpisów.</li>
+                            <li style="margin-bottom: 6px;"><b>🎯 Wizualizacja Celów (1RM):</b> Narzędzie motywacyjne pozwalające wpisać docelowy rekord w kg i śledzić postęp za pomocą paska procentowego (0% - 100%).</li>
+                            <li><b>🏋️ Zarządzanie Bazą Ćwiczeń:</b> Menedżer słownika ćwiczeń. Pozwala dodawać kategorie i ćwiczenia oraz edytować nazwy. Zmiana nazwy automatycznie aktualizuje stare wpisy w historii!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOLNA NAWIGACJA -->
+    <div class="nav-bar">
+        <button class="nav-item active" onclick="zmienZakladke('dziennik', this)">📝 Dziennik</button>
+        <button class="nav-item" onclick="zmienZakladke('plany', this)">📋 Plany</button>
+        <button class="nav-item" onclick="zmienZakladke('wiecej', this)">⚙️ Więcej</button>
+    </div>
+
+    <script>
+        function sprawdzPierwszeUruchomienie() {
             let czyWidzial = localStorage.getItem('ironmetric_historia_widziana');
             if (!czyWidzial) {
                 document.getElementById('onboarding-overlay').style.display = 'flex';
@@ -208,7 +527,7 @@
             zmienZakladke('wiecej', document.querySelectorAll('.nav-item')[2]);
         }
 
-        async function zapiszIZsynchronizuj() {
+        function zapiszIZsynchronizuj() {
             let data = document.getElementById('dziennik-data').value;
             let partia = document.getElementById('dziennik-partia').value;
             if(!data) { alert('Uzupełnij datę!'); return; }
@@ -372,4 +691,7 @@
             }
         }
 
-        inicjalizacja();</script>
+        inicjalizacja();
+    </script>
+</body>
+</html>
