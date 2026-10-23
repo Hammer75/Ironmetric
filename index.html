@@ -695,8 +695,102 @@
                 nameSpan.textContent = cwiczenie;
                 nameSpan.style.flex = "1";
                 div.appendChild(nameSpan);
+
+                let btnEdit = document.createElement('button');
+                btnEdit.textContent = '✏️';
+                btnEdit.className = 'btn-small';
+                btnEdit.style.marginRight = '5px';
+                btnEdit.onclick = () => edytujCwiczenie(kat, cwiczenie);
+                div.appendChild(btnEdit);
+                
+                let btnDel = document.createElement('button');
+                btnDel.textContent = '❌';
+                btnDel.className = 'btn-small';
+                btnDel.style.background = '#8B0000';
+                btnDel.onclick = () => usunCwiczenie(kat, cwiczenie);
+                div.appendChild(btnDel);
+
                 container.appendChild(div);
             });
+        }
+
+        async function zapiszBazeDoPamieci() {
+            localStorage.setItem('historia_baza_cwiczen', JSON.stringify(bazyCwiczen));
+            if (plikBazyHandle) {
+                try {
+                    const writable = await plikBazyHandle.createWritable();
+                    let historia = JSON.parse(localStorage.getItem('historia_treningow')) || [];
+                    const paczkaDanych = {
+                        historia: historia,
+                        baza: bazyCwiczen
+                    };
+                    await writable.write(JSON.stringify(paczkaDanych, null, 2));
+                    await writable.close();
+                } catch (err) {
+                    console.warn('Zapis w tle do pliku nie powiódł się:', err);
+                }
+            }
+        }
+
+        function dodajKategorie() {
+            let nowa = prompt("Podaj nazwę nowej kategorii:");
+            if (nowa && !bazyCwiczen[nowa]) {
+                bazyCwiczen[nowa] = [];
+                zapiszBazeDoPamieci();
+                inicjalizujKategorie();
+                odswiezPanelBazy();
+                alert("Kategoria dodana!");
+            }
+        }
+
+        function dodajCwiczenie() {
+            let kat = document.getElementById('menedzer-kategoria').value;
+            let nazwa = document.getElementById('nowe-cwiczenie-nazwa').value.trim();
+            if (kat && nazwa && !bazyCwiczen[kat].includes(nazwa)) {
+                bazyCwiczen[kat].push(nazwa);
+                document.getElementById('nowe-cwiczenie-nazwa').value = '';
+                zapiszBazeDoPamieci();
+                odswiezListeMenedzera();
+                aktualizujCwiczenia('dziennik');
+                alert("Ćwiczenie dodane!");
+            }
+        }
+
+        function usunCwiczenie(kat, nazwa) {
+            if (confirm(`Czy na pewno chcesz usunąć "${nazwa}" z kategorii "${kat}"?`)) {
+                bazyCwiczen[kat] = bazyCwiczen[kat].filter(c => c !== nazwa);
+                zapiszBazeDoPamieci();
+                odswiezListeMenedzera();
+                aktualizujCwiczenia('dziennik');
+            }
+        }
+
+        function edytujCwiczenie(kat, staraNazwa) {
+            let nowaNazwa = prompt(`Zmień nazwę dla "${staraNazwa}":`, staraNazwa);
+            if (nowaNazwa && nowaNazwa.trim() !== "" && nowaNazwa !== staraNazwa) {
+                nowaNazwa = nowaNazwa.trim();
+                let idx = bazyCwiczen[kat].indexOf(staraNazwa);
+                if (idx !== -1) {
+                    bazyCwiczen[kat][idx] = nowaNazwa;
+                }
+                
+                let historia = JSON.parse(localStorage.getItem('historia_treningow')) || [];
+                let zmieniono = false;
+                historia.forEach(w => {
+                    if (w.cwiczenie === staraNazwa) {
+                        w.cwiczenie = nowaNazwa;
+                        zmieniono = true;
+                    }
+                });
+                if (zmieniono) {
+                    localStorage.setItem('historia_treningow', JSON.stringify(historia));
+                }
+                
+                zapiszBazeDoPamieci();
+                odswiezListeMenedzera();
+                aktualizujCwiczenia('dziennik');
+                alert("Zaktualizowano nazwę (także w historii wpisów)!");
+            }
         }
 
         function inicjalizacja() {
