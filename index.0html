@@ -1,1 +1,721 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRONMETRIC – Dziennik Treningowy</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#121212">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><path d='M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='20' y1='50' x2='80' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='22' y='36' width='6' height='28' rx='2' fill='%2300B050'/><rect x='72' y='36' width='6' height='28' rx='2' fill='%2300B050'/><path d='M30 65 L43 32 L50 46 L57 32 L70 65' stroke='%23FFFFFF' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='%23121212'/><path d='M50 15 L80 32.5 V67.5 L50 85 L20 67.5 V32.5 Z' fill='%2315241d' stroke='%2300B050' stroke-width='5'/><line x1='30' y1='50' x2='70' y2='50' stroke='%2300B050' stroke-width='4' stroke-linecap='round'/><rect x='32' y='40' width='5' height='20' rx='1' fill='%2300B050'/><rect x='63' y='40' width='5' height='20' rx='1' fill='%2300B050'/><path d='M40 60 L48 36 L52 46 L56 36 L64 60' stroke='%23FFFFFF' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <style>
+        :root { --bg-color: #121212; --card-bg: #1e1e1e; --primary: #00B050; --primary-glow: rgba(0, 176, 80, 0.3); --text-main: #ffffff; --text-muted: #aaaaaa; --border: #333333; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; padding-bottom: 70px; }
+        header { background: linear-gradient(180deg, #1b2a2a 0%, #121d1d 100%); padding: 12px 15px; text-align: center; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .logo-wrapper { display: flex; align-items: center; gap: 10px; }
+        .logo-svg { width: 34px; height: 34px; filter: drop-shadow(0 0 8px var(--primary-glow)); }
+        .brand-text { display: flex; flex-direction: column; text-align: left; }
+        .brand-title { font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
+        .brand-subtitle { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        h2 { font-size: 1.1rem; margin-top: 0; color: var(--primary); }
+        label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; }
+        select, input { width: 100%; padding: 10px; margin-bottom: 12px; background-color: #2a2a2a; border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 1rem; box-sizing: border-box; }
+        button { background-color: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; }
+        button:active { opacity: 0.8; transform: scale(0.99); }
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; }
+        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; text-align: center; flex: 1; }
+        .nav-item.active { color: var(--primary); font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .result-box { background-color: #252525; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 0.9rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background-color: #222; }
+        .menu-btn { background-color: #2a2a2a; color: white; border: 1px solid var(--border); padding: 15px; width: 100%; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; text-align: left; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .menu-btn:hover { background-color: #333; }
+        .progress-bar-container { background-color: #2a2a2a; border-radius: 8px; overflow: hidden; height: 24px; width: 100%; margin-top: 10px; border: 1px solid var(--border); position: relative; }
+        .progress-bar-fill { background-color: var(--primary); height: 100%; width: 0%; transition: width 0.4s ease; }
+        .progress-text { position: absolute; width: 100%; top: 0; left: 0; line-height: 24px; text-align: center; font-size: 0.85rem; font-weight: bold; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .list-item-cwiczenie { display: flex; justify-content: space-between; align-items: center; background: #333; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 8px; }
+        .btn-small { width: auto; padding: 5px 10px; font-size: 0.8rem; background: #555; }
+    </style>
+</head>
+<body>
 
+    <!-- EKRAN POWITALNY -->
+    <div id="onboarding-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 25px; box-sizing: border-box; text-align: center;">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 90px; height: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 12px var(--primary-glow));">
+            <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" stroke="#00B050" stroke-width="5" fill="#15241d"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#00B050" stroke-width="4" stroke-linecap="round"/>
+            <rect x="22" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+            <rect x="72" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+            <path d="M30 65 L43 32 L50 46 L57 32 L70 65" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 style="color: var(--primary); margin-bottom: 20px; font-size: 2rem; font-weight: 800; letter-spacing: 1px;">IRONMETRIC</h1>
+        <p style="color: #ccc; font-size: 1rem; line-height: 1.6; max-width: 450px; margin-bottom: 15px;">
+            Witaj w aplikacji, która powstała z autentycznej potrzeby. Jej początkiem był dedykowany planer stworzony dla osób pracujących w systemie trzyzmianowym – zaprojektowany tak, by umożliwić utrzymanie regularności treningów pomimo wymagającego grafiku w pracy.
+        </p>
+        <p style="color: #ccc; font-size: 1rem; line-height: 1.6; max-width: 450px; margin-bottom: 35px;">
+            W miarę rozwoju i dostrzegania nowych potrzeb, narzędzie to płynnie wyewoluowało w pełnoprawny, analityczny dziennik treningowy. Ironmetric to rozwiązanie dla tych, którzy cenią systematyczność i mierzalny progres – bez zbędnych rozpraszaczy.
+        </p>
+        <button onclick="zamknijPowitanie()" style="max-width: 250px; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,176,80,0.3);">Uruchom Dziennik ➔</button>
+    </div>
+
+    <header>
+        <div class="logo-wrapper">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" stroke="#00B050" stroke-width="5" fill="#15241d"/>
+                <line x1="20" y1="50" x2="80" y2="50" stroke="#00B050" stroke-width="4" stroke-linecap="round"/>
+                <rect x="22" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <rect x="72" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <path d="M30 65 L43 32 L50 46 L57 32 L70 65" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="brand-text">
+                <span class="brand-title">IRONMETRIC</span>
+                <span class="brand-subtitle">Dziennik Treningowy</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ZAKŁADKA 1: DZIENNIK -->
+        <div id="tab-dziennik" class="tab-content active">
+            <div class="card">
+                <h2>Rejestracja aktywności</h2>
+                <label>Data Treningu / Dnia:</label>
+                <input type="date" id="dziennik-data">
+
+                <label>Kategoria / Partia Mięśniowa:</label>
+                <select id="dziennik-partia" onchange="zmienKategorieDziennika()"></select>
+
+                <div id="sekcja-treningowa">
+                    <label>Wybierz Ćwiczenie:</label>
+                    <select id="dziennik-cwiczenie"></select>
+
+                    <label>Numer Serii:</label>
+                    <select id="dziennik-seria">
+                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                    </select>
+
+                    <label id="label-ciezar">Ciężar (kg):</label>
+                    <input type="number" id="dziennik-ciezar" placeholder="np. 90" step="0.5" min="0" oninput="obliczWlocie()">
+
+                    <label id="label-powt">Powtórzenia:</label>
+                    <div id="kontener-powt">
+                        <select id="dziennik-powt" onchange="obliczWlocie()">
+                            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option selected>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                        </select>
+                    </div>
+
+                    <div id="group-rir">
+                        <label>Zapas sił w serii (RIR – opcjonalnie):</label>
+                        <select id="dziennik-rir">
+                            <option value="">-- Brak / Nie dotyczy --</option>
+                            <option value="0">RIR 0 (Do odcięcia / Upadek mięśniowy)</option>
+                            <option value="1">RIR 1 (1 powtórzenie w zapasie)</option>
+                            <option value="2">RIR 2 (2 powtórzenia w zapasie – optymalnie)</option>
+                            <option value="3">RIR 3 (3 powtórzenia w zapasie)</option>
+                            <option value="4+">RIR 4+ (Bardzo lekko / zapas)</option>
+                        </select>
+                    </div>
+
+                    <div class="result-box" id="live-calc">
+                        Tonaż: <b>0 kg</b> | Szacowane 1RM (Epley): <b>0 kg</b>
+                    </div>
+                </div>
+
+                <div id="sekcja-regeneracyjna" style="display: none;">
+                    <label>Wybierz Formę Regeneracji:</label>
+                    <select id="dziennik-regeneracja"></select>
+                </div>
+
+                <br>
+                <button onclick="zapiszIZsynchronizuj()" style="width:100%; background: var(--primary); padding: 12px; font-size: 1rem; font-weight: bold;">🔄 Zapisz i Synchronizuj</button>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 2: BIBLIOTEKA PLANÓW -->
+        <div id="tab-plany" class="tab-content">
+            <div class="card">
+                <h2>Wybierz Gotowy Plan</h2>
+                <label>Wybierz schemat:</label>
+                <select id="wybor-planu" onchange="pokazPlan()">
+                    <optgroup label="Push / Pull / Legs">
+                        <option value="ppl_push">PPL - PUSH (Klatka, Barki, Triceps)</option>
+                        <option value="ppl_pull">PPL - PULL (Plecy, Tył barku, Biceps)</option>
+                        <option value="ppl_legs">PPL - LEGS (Nogi, Pośladki, Brzuch)</option>
+                    </optgroup>
+                    <optgroup label="Full Body Workout">
+                        <option value="fbw_a">FBW - Wariant A (z Hip Thrust)</option>
+                        <option value="fbw_b">FBW - Wariant B (z RDL)</option>
+                    </optgroup>
+                    <optgroup label="Góra / Dół">
+                        <option value="gora">Góra / Dół - GÓRA</option>
+                        <option value="dol">Góra / Dół - DÓŁ (Nogi i Pośladki)</option>
+                    </optgroup>
+                </select>
+                <div class="result-box" id="tresc-planu" style="margin-top: 15px; line-height: 1.6;"></div>
+            </div>
+        </div>
+
+        <!-- PODMENU: HISTORIA / ANALIZA -->
+        <div id="subtab-historia" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Analiza Postępów</h2>
+                <label>Kategoria / Partia Mięśniowa:</label>
+                <select id="analiza-partia" onchange="aktualizujCwiczenia('analiza')"></select>
+
+                <div id="analiza-wybor-cwiczenia-box">
+                    <label>Wybierz Ćwiczenie / Metodę:</label>
+                    <select id="analiza-cwiczenie" onchange="zaladujAnalize()"></select>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 12px; margin-top: 10px;">
+                    <div style="flex: 1;"><label>Od daty:</label><input type="date" id="analiza-data-od" onchange="zmienionoDateOd()" style="margin-bottom: 0;"></div>
+                    <div style="flex: 1;"><label>Do daty:</label><input type="date" id="analiza-data-do" onchange="zmienionoDateDo()" style="margin-bottom: 0;"></div>
+                </div>
+
+                <div class="result-box" id="analiza-podsumowanie">Brak danych dla wybranego elementu.</div>
+                <div style="overflow-x: auto; margin-top: 15px;">
+                    <table id="tabela-historii"><tr><th>Data</th><th>Szczegóły</th></tr></table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 4: GŁÓWNE MENU "WIĘCEJ" -->
+        <div id="tab-wiecej" class="tab-content">
+            <div class="card">
+                <h2>Więcej Opcji</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Wybierz sekcję, aby zarządzać celami, bazą lub przeczytać instrukcję.</p>
+
+                <button class="menu-btn" onclick="przejdzDoPodmenu('historia')">
+                    <span>📊 Analiza i Historia</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('cele')">
+                    <span>🎯 Wizualizacja Celów (1RM)</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('baza')">
+                    <span>🏋️ Zarządzanie Bazą Ćwiczeń</span><span>➔</span>
+                </button>
+                <button class="menu-btn" onclick="przejdzDoPodmenu('instrukcja')">
+                    <span>📖 Instrukcja Obsługi</span><span>➔</span>
+                </button>
+
+                <button class="menu-btn" style="border-color: #333; background: #252525; margin-top: 10px;" onclick="otworzKontakt()">
+                    <span>✉️ Zgłoś błąd / Kontakt</span><span style="color: var(--text-muted);">➔</span>
+                </button>
+
+                <button class="menu-btn" style="border-color: var(--primary); background: linear-gradient(135deg, #1e2e22 0%, #1a1a1a 100%); margin-top: 20px;" onclick="window.open('https://suppi.pl/h75', '_blank')">
+                    <span>☕ Postaw mi kawę</span><span style="color: var(--primary);">❤️</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PODMENU: KAMIENIE MILOWE -->
+        <div id="subtab-cele" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Wizualizacja Celów (1RM)</h2>
+                <label>Wybierz ćwiczenie do śledzenia:</label>
+                <select id="cel-cwiczenie" onchange="przeliczCel()"></select>
+
+                <label>Twój docelowy rekord (kg):</label>
+                <input type="number" id="cel-wartosc" value="100" step="1" min="0" oninput="przeliczCel()">
+
+                <div class="result-box" id="cel-wynik-box" style="margin-top: 15px;">Obliczanie postępu...</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-text" id="progress-text">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PODMENU: BAZA ĆWICZEŃ -->
+        <div id="subtab-baza" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2>Baza Ćwiczeń</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height:1.4;">
+                    Zarządzaj listą ćwiczeń. Możesz dodać nowe kategorie i ćwiczenia. Zmiana nazwy istniejącego ćwiczenia automatycznie zaktualizuje Twoją historię treningów!
+                </p>
+
+                <label>Wybierz Kategorię:</label>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <select id="menedzer-kategoria" onchange="odswiezListeMenedzera()" style="margin-bottom: 0;"></select>
+                    <button onclick="dodajKategorie()" class="btn-small" style="padding: 0 15px;">+ Kat.</button>
+                </div>
+
+                <div style="background: #252525; padding: 10px; border-radius: 6px; margin-bottom: 15px;">
+                    <label>Dodaj nowe ćwiczenie (do wybranej kategorii):</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="nowe-cwiczenie-nazwa" placeholder="Nazwa..." style="margin-bottom: 0;">
+                        <button onclick="dodajCwiczenie()" class="btn-small" style="width: 80px; background: var(--primary);">Dodaj</button>
+                    </div>
+                </div>
+
+                <div id="lista-cwiczen-menedzer"></div>
+            </div>
+        </div>
+
+        <!-- PODMENU: INSTRUKCJA OBSŁUGI -->
+        <div id="subtab-instrukcja" class="tab-content">
+            <div class="card">
+                <button onclick="wracajDoWiecej()" class="btn-small" style="margin-bottom: 15px;">⬅ Powrót do menu</button>
+                <h2 style="color: var(--primary); margin-bottom: 15px;">📖 Instrukcja Obsługi</h2>
+                <div style="font-size: 0.9rem; line-height: 1.6; color: #ccc;">
+                    <p style="color: #fff; font-weight: bold; margin-bottom: 15px;">Witaj w oficjalnej instrukcji obsługi aplikacji <b>IRONMETRIC</b>. Aby zapewnić najwyższy komfort korzystania, pełną płynność oraz dostęp do danych offline, zalecamy zainstalowanie aplikacji jako <b>PWA (Progressive Web App)</b> na swoim telefonie.<br><br><b>Jak zainstalować aplikację (PWA):</b><br>• <b>Android (Chrome):</b> Otwórz aplikację w przeglądarce, kliknij ikonę menu (trzy kropki w prawym górnym rogu) i wybierz opcję <b>„Zainstaluj aplikację”</b> lub <b>„Dodaj do ekranu głównego”</b>.<br>• <b>iOS (Safari):</b> Otwórz aplikację w przeglądarce Safari, kliknij przycisk <b>Udostępnij</b> (kwadrat ze strzałką w górę) na dolnym pasku, a następnie przewiń listę i wybierz <b>„Do ekranu początkowego”</b>.</p>
+                    
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">1. 📝 Dziennik (Rejestracja aktywności)</b>
+                        Główny ekran roboczy aplikacji służący do bieżącego zapisywania Twoich treningów siłowych, jednostek cardio oraz dni regeneracyjnych.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>Data Treningu / Dnia:</b> Pozwala wskazać datę, której dotyczy wpis (domyślnie dzisiejsza). Umożliwia bieżące rejestrowanie oraz uzupełnianie zaległych treningów wstecz.</li>
+                            <li style="margin-bottom: 6px;"><b>Kategoria / Partia Mięśniowa:</b> Grupuje ćwiczenia według partii ciała (Klatka, Plecy, Nogi, Pośladki, Barki, Ramiona, Brzuch) oraz trybów specjalnych (Cardio i Regeneracja).</li>
+                            <li style="margin-bottom: 6px;"><b>Wybierz Ćwiczenie:</b> Lista konkretnych ćwiczeń przypisanych do wybranej kategorii.</li>
+                            <li style="margin-bottom: 6px;"><b>Numer Serii:</b> Określa, którą z kolei serię danego ćwiczenia właśnie wykonujesz (od 1 do 6).</li>
+                            <li style="margin-bottom: 6px;"><b>Ciężar (kg) / Czas (min):</b> Nałożony ciężar roboczy w kg (dokładność do 0.5 kg) lub czas trwania wysiłku w minutach dla cardio.</li>
+                            <li style="margin-bottom: 6px;"><b>Powtórzenia / Dystans (km):</b> Liczba powtórzeń wybierana z listy od 1 do 12 (domyślnie 8) lub dystans w km dla cardio.</li>
+                            <li style="margin-bottom: 6px;"><b>Zapas sił (RIR):</b> Rate in Reserve – zapas powtórzeń do technicznego upadku mięśniowego (od RIR 0 do RIR 4+).</li>
+                            <li style="margin-bottom: 6px;"><b>Live-Calc:</b> Automatycznie wylicza tonaż oraz szacowany maksymalny wynik (1RM według Epleya) przed zapisem.</li>
+                            <li><b>Przycisk Zapisz:</b> Zapisuje wpis lokalnie i synchronizuje stan aplikacji.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">2. 📋 Plany (Biblioteka Planów)</b>
+                        Sekcja zawierająca gotowe, sprawdzone systemy i podziały treningowe dla osób na każdym poziomie zaawansowania.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>Wybierz schemat:</b> Przełączaj się pomiędzy systemami (PPL, FBW, Góra / Dół).</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #252525; padding: 14px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <b style="color: white; font-size: 1.05rem; display: block; margin-bottom: 8px;">3. ⚙️ Więcej (Menu Główne Opcji)</b>
+                        Centralny punkt nawigacyjny prowadzący do zaawansowanych modułów analitycznych, celów oraz bazy danych.
+                        <ul style="margin: 8px 0 0 15px; padding: 0; color: #bbb;">
+                            <li style="margin-bottom: 6px;"><b>📊 Analiza i Historia:</b> Przeglądanie historii, filtrowanie wg partii, ćwiczenia i zakresu dat (Od / Do). Pokazuje rekordy 1RM, max ciężar, łączny tonaż oraz tabelę wpisów.</li>
+                            <li style="margin-bottom: 6px;"><b>🎯 Wizualizacja Celów (1RM):</b> Narzędzie motywacyjne pozwalające wpisać docelowy rekord w kg i śledzić postęp za pomocą paska procentowego (0% - 100%).</li>
+                            <li><b>🏋️ Zarządzanie Bazą Ćwiczeń:</b> Menedżer słownika ćwiczeń. Pozwala dodawać kategorie i ćwiczenia oraz edytować nazwy. Zmiana nazwy automatycznie aktualizuje stare wpisy w historii!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOLNA NAWIGACJA -->
+    <div class="nav-bar">
+        <button class="nav-item active" onclick="zmienZakladke('dziennik', this)">📝 Dziennik</button>
+        <button class="nav-item" onclick="zmienZakladke('plany', this)">📋 Plany</button>
+        <button class="nav-item" onclick="zmienZakladke('wiecej', this)">⚙️ Więcej</button>
+    </div>
+
+    <script>
+        function sprawdzPierwszeUruchomienie() {
+            let czyWidzial = localStorage.getItem('ironmetric_historia_widziana');
+            if (!czyWidzial) {
+                document.getElementById('onboarding-overlay').style.display = 'flex';
+            }
+        }
+
+        function zamknijPowitanie() {
+            localStorage.setItem('ironmetric_historia_widziana', 'true');
+            let overlay = document.getElementById('onboarding-overlay');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => { overlay.style.display = 'none'; }, 400);
+        }
+
+        sprawdzPierwszeUruchomienie();
+
+        const domyslnaBazaCwiczen = {
+            'Klatka': ['Wyciskanie sztangi na ławce poziomej', 'Wyciskanie sztangi na ławce skośnej dodatniej', 'Wyciskanie hantli na ławce poziomej', 'Wyciskanie hantli na ławce skośnej dodatniej', 'Rozpiętki z hantlami', 'Rozpiętki na maszynie (Pec Deck)', 'Krzyżowanie linek wyciągu', 'Pompki na poręczach (Dipy)', 'Pompki klasyczne', 'Wyciskanie na maszynie (Hammer Strength)'],
+            'Plecy': ['Martwy ciąg klasyczny', 'Martwy ciąg sumiasty', 'Wiosłowanie sztangą w opadzie tułowia', 'Wiosłowanie hantlem jednorącz o ławkę', 'Wiosłowanie na maszynie (Machine Row)', 'Ściąganie drążka wyciągu górnego do klatki', 'Ściąganie drążka z wyciągu dolnego do klatki', 'Wciąganie uchwytu wyciągu dolnego do brzucha', 'Podciąganie na drążku (nachwyt / podchwyt)', 'Szrugsy (wznosy barków) ze sztangą / hantlami'],
+            'Nogi': ['Przysiady ze sztangą na plecach (Back Squat)', 'Przysiady przednie (Front Squat)', 'Wykroki z hantlami / sztangą', 'Martwy ciąg na prostych nogach (RDL / Stiff-leg)', 'Wypychanie ciężaru na suwnicy (Leg Press)', 'Uginanie nóg na maszynie leżąc na brzuchu', 'Uginanie nóg na maszynie siedząc (tył ud)', 'Prostowanie nóg siedząc (maszyna - czworogłowe)', 'Wspięcia na palce stojąc (łydki)', 'Wspięcia na palce siedząc', 'Wspięcia na palce na suwnicy'],
+            'Posladki': ['Hip Thrust ze sztangą', 'Rumuński martwy ciąg (RDL)', 'Wypychanie ciężaru wysokimi stopami na suwnicy', 'Wznosy bioder na maszynie / mostki biodrowe', 'Przysiady bułgarskie (wersja na pośladek)', 'Zakroki z hantlami / sztangą', 'Glute Bridge ze sztangą', 'Odwodzenie nóg na maszynie (Abductor)', 'Uginanie nóg na maszynie leżąc na brzuchu'],
+            'Barki': ['Wyciskanie żołnierskie (Overhead Press)', 'Wyciskanie hantli nad głowę siedząc', 'Wyciskanie na maszynie (Shoulder Press)', 'Wznosy hantli bokiem (bok barku)', 'Wznosy hantli w opadzie tułowia (tył barku)', 'Odwodzenie ramion na maszynie (Reverse Pec Deck)', 'Face pull (wyciąg - tył barku)', 'Wznosy ramion ze sztangielkami w przód', 'Podciąganie sztangi wzdłuż tułowia'],
+            'Ramiona': ['Uginanie przedramion ze sztangą (biceps)', 'Uginanie przedramion z hantlami z supinacją', 'Uginanie hantlami chwytem młotkowym', 'Uginanie na modlitewniku', 'Uginanie ramion z linką wyciągu dolnego', 'Wyciskanie francuskie ze sztangą łamaną leżąc (triceps)', 'Wyciskanie wąskim chwytem na ławce poziomej', 'Prostowanie ramion na wyciągu (ściąganie sznura)', 'Wyciskanie hantla oburącz zza głowy siedząc', 'Pompki w podporze tyłem na ławce'],
+            'Brzuch': ['Allahy (brzuch na wyciągu klęcząc)', 'Wznosy kolan do klatki w zwisie na drążku', 'Wznosy prostych nóg w zwisie', 'Skrętne spięcia brzucha (allahy skośne)', 'Kółko (Ab Roller / Rollout)', 'Spięcia brzucha leżąc (Crunches)', 'Deska (Plank)', 'Allahy na maszynie'],
+            'Cardio': ['Bieżnia / Bieganie', 'Rower stacjonarny', 'Orbitrek / Maszyna eliptyczna'],
+            'Regeneracja': ['Odpoczynek całkowity', 'Lekkie cardio / spacer', 'Stretching', 'Rolowanie (foam roller)', 'Basen', 'Sauna', 'Joga regeneracyjna', 'Ćwiczenia mobilnościowe', 'Kąpiel solankowa']
+        };
+
+        let bazyCwiczen = {};
+        let zapisanaBaza = localStorage.getItem('historia_baza_cwiczen');
+        if (zapisanaBaza) {
+            bazyCwiczen = JSON.parse(zapisanaBaza);
+        } else {
+            bazyCwiczen = JSON.parse(JSON.stringify(domyslnaBazaCwiczen));
+        }
+
+        const planyTreningowe = {
+            'ppl_push': '<b>PUSH:</b><br>1. Wyciskanie sztangi na ławce poziomej<br>2. Wyciskanie hantli na ławce skośnej dodatniej<br>3. Wyciskanie żołnierskie (Overhead Press)<br>4. Wznosy hantli bokiem (bok barku)<br>5. Wyciskanie francuskie ze sztangą łamaną leżąc (triceps)<br>6. Pompki na poręczach (Dipy)',
+            'ppl_pull': '<b>PULL:</b><br>1. Martwy ciąg klasyczny<br>2. Wiosłowanie sztangą w opadzie tułowia<br>3. Ściąganie drążka wyciągu górnego do klatki<br>4. Face pull (wyciąg - tył barku)<br>5. Uginanie przedramion ze sztangą (biceps)<br>6. Uginanie hantlami chwytem młotkowym',
+            'ppl_legs': '<b>LEGS & GLUTES:</b><br>1. Przysiady ze sztangą na plecach (Back Squat)<br>2. Hip Thrust ze sztangą<br>3. Rumuński martwy ciąg (RDL)<br>4. Wypychanie ciężaru na suwnicy (Leg Press)<br>5. Uginanie nóg na maszynie siedząc (tył ud)<br>6. Wspięcia na palce stojąc (łydki)',
+            'fbw_a': '<b>FBW - Wariant A:</b><br>1. Przysiady ze sztangą na plecach (Back Squat)<br>2. Wiosłowanie sztangą w opadzie tułowia<br>3. Wyciskanie sztangi na ławce poziomej<br>4. Hip Thrust ze sztangą<br>5. Wyciskanie żołnierskie (Overhead Press)<br>6. Uginanie przedramion ze sztangą (biceps)',
+            'fbw_b': '<b>FBW - Wariant B:</b><br>1. Rumuński martwy ciąg (RDL)<br>2. Ściąganie drążka wyciągu górnego do klatki<br>3. Wyciskanie hantli na ławce skośnej dodatniej<br>4. Wykroki z hantlami / sztangą<br>5. Wyciskanie hantli nad głowę siedząc<br>6. Wyciskanie francuskie ze sztangą łamaną leżąc (triceps)',
+            'gora': '<b>GÓRA:</b><br>1. Wyciskanie sztangi na ławce poziomej<br>2. Wiosłowanie sztangą w opadzie tułowia<br>3. Wyciskanie hantli nad głowę siedząc<br>4. Ściąganie drążka wyciągu górnego do klatki<br>5. Wznosy hantli bokiem (bok barku)<br>6. Uginanie przedramion z hantlami z supinacją',
+            'dol': '<b>DÓŁ:</b><br>1. Przysiady ze sztangą na plecach (Back Squat)<br>2. Hip Thrust ze sztangą<br>3. Rumuński martwy ciąg (RDL)<br>4. Wypychanie ciężaru na suwnicy (Leg Press)<br>5. Uginanie nóg na maszynie leżąc na brzuchu<br>6. Wspięcia na palce stojąc (łydki)'
+        };
+
+        function inicjalizujKategorie() {
+            const ikony = {'Klatka':'💥', 'Plecy':'🦅', 'Nogi':'🦵', 'Posladki':'🍑', 'Barki':'🎯', 'Ramiona':'💪', 'Brzuch':'♨️', 'Cardio':'🏃', 'Regeneracja':'🔄'};
+            ['dziennik-partia', 'analiza-partia'].forEach(id => {
+                let el = document.getElementById(id);
+                if (!el) return;
+                let val = el.value;
+                el.innerHTML = '';
+                Object.keys(bazyCwiczen).forEach(kat => {
+                    let opt = document.createElement('option');
+                    opt.value = kat;
+                    opt.textContent = (ikony[kat] ? ikony[kat] + ' ' : '📌 ') + kat;
+                    el.appendChild(opt);
+                });
+                if (val && bazyCwiczen[val]) el.value = val;
+            });
+        }
+
+        function zmienKategorieDziennika() {
+            let partia = document.getElementById('dziennik-partia').value;
+            let sekTrening = document.getElementById('sekcja-treningowa');
+            let sekRegen = document.getElementById('sekcja-regeneracyjna');
+            let labelCiezar = document.getElementById('label-ciezar');
+            let labelPowt = document.getElementById('label-powt');
+            let inputCiezar = document.getElementById('dziennik-ciezar');
+            let liveCalc = document.getElementById('live-calc');
+            let groupRir = document.getElementById('group-rir');
+
+            if (partia === 'Regeneracja') {
+                sekTrening.style.display = 'none';
+                sekRegen.style.display = 'block';
+                let regSelect = document.getElementById('dziennik-regeneracja');
+                regSelect.innerHTML = '';
+                bazyCwiczen['Regeneracja'].forEach(cw => {
+                    let opt = document.createElement('option');
+                    opt.value = cw; opt.textContent = cw; regSelect.appendChild(opt);
+                });
+            } else if (partia === 'Cardio') {
+                sekRegen.style.display = 'none';
+                sekTrening.style.display = 'block';
+                aktualizujCwiczenia('dziennik');
+                if(labelCiezar) labelCiezar.textContent = "Czas (min):";
+                if(inputCiezar) inputCiezar.placeholder = "np. 30";
+                if(labelPowt) labelPowt.textContent = "Dystans (km / opcjonalnie):";
+                let kontenerPowt = document.getElementById('kontener-powt');
+                if(kontenerPowt) {
+                    kontenerPowt.innerHTML = '<input type="number" id="dziennik-powt" placeholder="np. 5.5" step="0.1" min="0">';
+                }
+                if(groupRir) groupRir.style.display = 'none';
+                if(liveCalc) liveCalc.innerHTML = 'Typ aktywności: <b>Cardio / Wytrzymałość</b>';
+            } else {
+                sekRegen.style.display = 'none';
+                sekTrening.style.display = 'block';
+                aktualizujCwiczenia('dziennik');
+                if(labelCiezar) labelCiezar.textContent = "Ciężar (kg):";
+                if(inputCiezar) inputCiezar.placeholder = "np. 90";
+                if(labelPowt) labelPowt.textContent = "Powtórzenia:";
+                let kontenerPowt = document.getElementById('kontener-powt');
+                if(kontenerPowt) {
+                    kontenerPowt.innerHTML = `<select id="dziennik-powt" onchange="obliczWlocie()">
+                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option selected>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                    </select>`;
+                }
+                if(groupRir) groupRir.style.display = 'block';
+                obliczWlocie();
+            }
+        }
+
+        function aktualizujCwiczenia(tryb) {
+            let partiaId = tryb === 'dziennik' ? 'dziennik-partia' : 'analiza-partia';
+            let cwiczenieId = tryb === 'dziennik' ? 'dziennik-cwiczenie' : 'analiza-cwiczenie';
+            
+            const partia = document.getElementById(partiaId).value;
+            const selectCwiczenie = document.getElementById(cwiczenieId);
+            if(!selectCwiczenie) return;
+            selectCwiczenie.innerHTML = '';
+            
+            if(bazyCwiczen[partia]) {
+                if (tryb === 'analiza' && partia === 'Regeneracja') {
+                    let optAll = document.createElement('option');
+                    optAll.value = "Wszystkie"; optAll.textContent = "-- Wszystkie formy --"; selectCwiczenie.appendChild(optAll);
+                }
+                bazyCwiczen[partia].forEach(cw => {
+                    let opt = document.createElement('option');
+                    opt.value = cw; opt.textContent = cw; selectCwiczenie.appendChild(opt);
+                });
+            }
+            if (tryb === 'analiza') zaladujAnalize();
+        }
+
+        function zainicjalizujCele() {
+            let selectCel = document.getElementById('cel-cwiczenie');
+            selectCel.innerHTML = '';
+            for (let partia in bazyCwiczen) {
+                if (partia === 'Regeneracja') continue;
+                bazyCwiczen[partia].forEach(cw => {
+                    let opt = document.createElement('option');
+                    opt.value = cw; opt.textContent = `${cw} (${partia})`; selectCel.appendChild(opt);
+                });
+            }
+            przeliczCel();
+        }
+
+        function przeliczCel() {
+            let wybraneCwiczenie = document.getElementById('cel-cwiczenie').value;
+            let docelowyCiezar = parseFloat(document.getElementById('cel-wartosc').value) || 0;
+            let wynikBox = document.getElementById('cel-wynik-box');
+            let fillBar = document.getElementById('progress-fill');
+            let textBar = document.getElementById('progress-text');
+
+            let historia = JSON.parse(localStorage.getItem('historia_treningow')) || [];
+            let wpisyCwiczenia = historia.filter(w => w.cwiczenie === wybraneCwiczenie && w.typ !== 'Regeneracja');
+
+            if (wpisyCwiczenia.length === 0) {
+                wynikBox.innerHTML = `Brak historii dla tego ćwiczenia. Twój obecny max (1RM): <b>0 kg</b>`;
+                fillBar.style.width = '0%'; textBar.innerHTML = '0%'; return;
+            }
+
+            let aktualnyMax1RM = Math.max(...wpisyCwiczenia.map(w => w.onerm));
+            if (docelowyCiezar <= 0) {
+                wynikBox.innerHTML = `Obecny max (1RM): <b>${aktualnyMax1RM} kg</b>`;
+                fillBar.style.width = '0%'; textBar.innerHTML = '0%'; return;
+            }
+
+            let procent = Math.min(Math.round((aktualnyMax1RM / docelowyCiezar) * 100), 100);
+            wynikBox.innerHTML = `Aktualny najlepszy 1RM: <b>${aktualnyMax1RM} kg</b> / Cel: <b>${docelowyCiezar} kg</b>`;
+            fillBar.style.width = procent + '%'; textBar.innerHTML = procent + '%';
+        }
+
+        function obliczWlocie() {
+            let ciezar = parseFloat(document.getElementById('dziennik-ciezar').value) || 0;
+            let powt = parseInt(document.getElementById('dziennik-powt').value) || 0;
+            let tonaz = ciezar * powt;
+            let onerm = powt > 0 ? Math.round(ciezar * (1 + powt / 30) * 10) / 10 : 0;
+            document.getElementById('live-calc').innerHTML = `Tonaż: <b>${tonaz} kg</b> | Szacowane 1RM (Epley): <b>${onerm} kg</b>`;
+        }
+
+        function zmienZakladke(nazwa, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('tab-' + nazwa).classList.add('active');
+            if (el) el.classList.add('active');
+        }
+
+        function przejdzDoPodmenu(nazwa) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('subtab-' + nazwa).classList.add('active');
+            if (nazwa === 'cele') zainicjalizujCele();
+            else if (nazwa === 'historia') {
+                let dzisiaj = new Date().toISOString().split('T')[0];
+                let elOd = document.getElementById('analiza-data-od');
+                let elDo = document.getElementById('analiza-data-do');
+                if (elOd && !elOd.value) elOd.value = dzisiaj;
+                if (elDo && !elDo.value) elDo.value = dzisiaj;
+                if (elOd && elDo) { elDo.min = elOd.value; }
+                aktualizujCwiczenia('analiza');
+            }
+            else if (nazwa === 'baza') odswiezPanelBazy();
+        }
+
+        function wracajDoWiecej() {
+            zmienZakladke('wiecej', document.querySelectorAll('.nav-item')[2]);
+        }
+
+        let plikBazyHandle;
+
+        async function zapiszIZsynchronizuj() {
+            let data = document.getElementById('dziennik-data').value;
+            let partia = document.getElementById('dziennik-partia').value;
+            if(!data) { alert('Uzupełnij datę!'); return; }
+
+            let ciezar = document.getElementById('dziennik-ciezar').value;
+            let powt = document.getElementById('dziennik-powt').value;
+            let dodanoNowyWpis = false;
+            let wpis = null;
+
+            if (partia === 'Regeneracja') {
+                let metodaRegen = document.getElementById('dziennik-regeneracja').value;
+                wpis = { data, cwiczenie: metodaRegen, typ: 'Regeneracja', ciezar: 0, powt: 0, onerm: 0 };
+                dodanoNowyWpis = true;
+            } else if (partia === 'Cardio') {
+                let cwiczenie = document.getElementById('dziennik-cwiczenie').value;
+                let czas = document.getElementById('dziennik-ciezar').value;
+                let dystans = document.getElementById('dziennik-powt').value;
+                if (czas) {
+                    wpis = { data, cwiczenie, typ: 'Cardio', ciezar: parseFloat(czas) || 0, powt: parseFloat(dystans) || 0, onerm: 0 };
+                    document.getElementById('dziennik-ciezar').value = '';
+                    document.getElementById('dziennik-powt').value = '8';
+                    zmienKategorieDziennika();
+                    dodanoNowyWpis = true;
+                }
+            } else {
+                if (ciezar && powt) {
+                    let cwiczenie = document.getElementById('dziennik-cwiczenie').value;
+                    let onerm = Math.round(parseFloat(ciezar) * (1 + parseInt(powt) / 30) * 10) / 10;
+                    let rir = document.getElementById('dziennik-rir').value;
+                    wpis = { data, cwiczenie, typ: 'Trening', ciezar: parseFloat(ciezar), powt: parseInt(powt), onerm, rir: rir !== "" ? rir : null };
+                    
+                    document.getElementById('dziennik-ciezar').value = '';
+                    document.getElementById('dziennik-powt').value = '8';
+                    obliczWlocie();
+                    dodanoNowyWpis = true;
+                }
+            }
+
+            if (!dodanoNowyWpis) {
+                alert('Brak danych do zapisu.');
+                return;
+            }
+
+            let historia = JSON.parse(localStorage.getItem('historia_treningow')) || [];
+            historia.unshift(wpis);
+            localStorage.setItem('historia_treningow', JSON.stringify(historia));
+
+            try {
+                if (!plikBazyHandle) {
+                    plikBazyHandle = await window.showSaveFilePicker({
+                        suggestedName: `Ironmetric_Baza.json`,
+                        types: [{ description: 'Plik bazy Ironmetric', accept: { 'application/json': ['.json'] } }]
+                    });
+                }
+
+                const writable = await plikBazyHandle.createWritable();
+                const paczkaDanych = {
+                    historia: historia,
+                    baza: bazyCwiczen
+                };
+                await writable.write(JSON.stringify(paczkaDanych, null, 2));
+                await writable.close();
+
+                alert('Zapisano w aplikacji i zsynchronizowano z zewnętrznym plikiem!');
+            } catch (err) {
+                console.warn('Zapisano lokalnie, ale przerwano synchronizację z plikiem: ', err);
+                alert('Wpis zapisany w aplikacji. (Synchronizacja z plikiem zewnętrznym anulowana lub niedostępna).');
+                plikBazyHandle = null;
+            }
+        }
+
+        function zmienionoDateOd() {
+            let elOd = document.getElementById('analiza-data-od');
+            let elDo = document.getElementById('analiza-data-do');
+            if (elOd && elDo) {
+                elDo.min = elOd.value;
+                if (elDo.value && elDo.value < elOd.value) elDo.value = elOd.value;
+            }
+            zaladujAnalize();
+        }
+
+        function zaladujAnalize() {
+            let wybraneCwiczenie = document.getElementById('analiza-cwiczenie').value;
+            let partia = document.getElementById('analiza-partia').value;
+            let dataOd = document.getElementById('analiza-data-od').value;
+            let dataDo = document.getElementById('analiza-data-do').value;
+            let tabela = document.getElementById('tabela-historii');
+            let podsumowanieBox = document.getElementById('analiza-podsumowanie');
+            
+            let historia = JSON.parse(localStorage.getItem('historia_treningow')) || [];
+            let przefiltrowane = historia.filter(w => {
+                if (partia === 'Regeneracja' && wybraneCwiczenie === 'Wszystkie') {
+                    if (w.typ !== 'Regeneracja') return false;
+                } else {
+                    if (w.cwiczenie !== wybraneCwiczenie) return false;
+                }
+                if (dataOd && w.data < dataOd) return false;
+                if (dataDo && w.data > dataDo) return false;
+                return true;
+            });
+
+            if (partia === 'Regeneracja') {
+                tabela.innerHTML = '<tr><th>Data</th><th>Forma Regeneracji</th></tr>';
+                if (przefiltrowane.length === 0) { podsumowanieBox.innerHTML = `Brak wpisów regeneracyjnych.`; return; }
+                podsumowanieBox.innerHTML = `Liczba wpisów: <b>${przefiltrowane.length}</b>`;
+                przefiltrowane.forEach(w => {
+                    let tr = document.createElement('tr'); tr.innerHTML = `<td>${w.data}</td><td><b>${w.cwiczenie}</b></td>`; tabela.appendChild(tr);
+                });
+            } else if (partia === 'Cardio') {
+                tabela.innerHTML = '<tr><th>Data</th><th>Czas</th><th>Dystans</th></tr>';
+                if (przefiltrowane.length === 0) { podsumowanieBox.innerHTML = `Brak wpisów cardio.`; return; }
+                let sumaCzasu = przefiltrowane.reduce((acc, w) => acc + (w.ciezar || 0), 0);
+                podsumowanieBox.innerHTML = `Łączny czas: <b>${sumaCzasu} min</b>`;
+                przefiltrowane.forEach(w => {
+                    let tr = document.createElement('tr'); 
+                    tr.innerHTML = `<td>${w.data}</td><td><b>${w.ciezar} min</b></td><td>${w.powt || '-'} km</td>`; 
+                    tabela.appendChild(tr);
+                });
+            } else {
+                tabela.innerHTML = '<tr><th>Data</th><th>Ciężar</th><th>Powt.</th><th>RIR</th><th>1RM</th></tr>';
+                if (przefiltrowane.length === 0) { podsumowanieBox.innerHTML = `Brak wpisów dla tego ćwiczenia.`; return; }
+                let max1RM = Math.max(...przefiltrowane.map(w => w.onerm));
+                let maxCiezar = Math.max(...przefiltrowane.map(w => w.ciezar));
+                podsumowanieBox.innerHTML = `Najlepszy wynik (1RM): <b>${max1RM} kg</b> | Max Ciężar: <b>${maxCiezar} kg</b>`;
+
+                przefiltrowane.forEach(w => {
+                    let tr = document.createElement('tr');
+                    let rirVal = (w.rir !== undefined && w.rir !== null && w.rir !== "") ? `RIR ${w.rir}` : '-';
+                    tr.innerHTML = `<td>${w.data}</td><td>${w.ciezar} kg</td><td>${w.powt}</td><td>${rirVal}</td><td><b>${w.onerm} kg</b></td>`;
+                    tabela.appendChild(tr);
+                });
+            }
+        }
+
+        function pokazPlan() {
+            let klucz = document.getElementById('wybor-planu').value;
+            document.getElementById('tresc-planu').innerHTML = planyTreningowe[klucz];
+        }
+
+        function odswiezPanelBazy() {
+            let select = document.getElementById('menedzer-kategoria');
+            let aktualnyWybor = select.value;
+            select.innerHTML = '';
+            Object.keys(bazyCwiczen).forEach(kat => {
+                let opt = document.createElement('option');
+                opt.value = kat; opt.textContent = kat;
+                select.appendChild(opt);
+            });
+            if (aktualnyWybor && bazyCwiczen[aktualnyWybor]) select.value = aktualnyWybor;
+            odswiezListeMenedzera();
+        }
+
+        function odswiezListeMenedzera() {
+            let kat = document.getElementById('menedzer-kategoria').value;
+            let container = document.getElementById('lista-cwiczen-menedzer');
+            container.innerHTML = '';
+            if (!kat || !bazyCwiczen[kat]) return;
+
+            bazyCwiczen[kat].forEach((cwiczenie, index) => {
+                let div = document.createElement('div');
+                div.className = "list-item-cwiczenie";
+                let nameSpan = document.createElement('span');
+                nameSpan.textContent = cwiczenie;
+                nameSpan.style.flex = "1";
+                div.appendChild(nameSpan);
+                container.appendChild(div);
+            });
+        }
+
+        function inicjalizacja() {
+            inicjalizujKategorie();
+            let dzisiejszaData = new Date().toISOString().split('T')[0];
+            let dataInput = document.getElementById('dziennik-data');
+            if (dataInput) dataInput.value = dzisiejszaData;
+            zmienKategorieDziennika();
+            pokazPlan();
+        }
+
+        function otworzKontakt() {
+            let email = prompt("Wpisz swoją wiadomość:");
+            if (email) {
+                window.location.href = `mailto:h75@onet.eu?subject=Ironmetric&body=${encodeURIComponent(email)}`;
+            }
+        }
+
+        inicjalizacja();
+    </script>
+</body>
+</html>
