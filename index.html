@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRONMETRIC - Animacja Startowa</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            cursor: pointer; /* Pokazuje, że cała strona jest klikalna */
+            user-select: none;
+        }
 
+        .splash-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none; /* Sprawia, że kliknięcia przechodzą na całe body */
+        }
+
+        .anim-hex {
+            animation: hexSpinAndPulse 3.5s ease-out infinite alternate;
+        }
+
+        @keyframes hexSpinAndPulse {
+            0% { transform: rotate(0deg) scale(0.6); opacity: 0; filter: drop-shadow(0 0 0px rgba(0, 255, 100, 0)); }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 1; filter: drop-shadow(0 0 60px rgba(0, 255, 100, 1)) drop-shadow(0 0 120px rgba(0, 255, 100, 1)) drop-shadow(0 0 200px rgba(0, 200, 80, 0.9)); }
+            100% { transform: rotate(360deg) scale(1); opacity: 1; filter: drop-shadow(0 0 50px rgba(0, 255, 100, 1)) drop-shadow(0 0 100px rgba(0, 176, 80, 0.9)); }
+        }
+
+        .splash-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin-top: 20px;
+            margin-bottom: 0px;
+            background: linear-gradient(135deg, #ffffff 30%, #00B050 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideFadeIn 1.5s ease-out infinite alternate;
+        }
+
+        @keyframes slideFadeIn {
+            0% { opacity: 0.7; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .rotating-subtitle {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #00B050;
+            text-transform: uppercase;
+            margin-top: 2px;
+            perspective: 600px;
+            display: inline-block;
+            transform-style: preserve-3d;
+            animation: rotateXAxis 4s linear infinite;
+        }
+
+        @keyframes rotateXAxis {
+            0% { transform: rotateX(0deg); opacity: 0.9; }
+            50% { transform: rotateX(180deg); opacity: 0.3; }
+            100% { transform: rotateX(360deg); opacity: 0.9; }
+        }
+
+        /* Dyskretna podpowiedź na dole */
+        .hint {
+            position: absolute;
+            bottom: 20px;
+            color: #555;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: pulseHint 2s infinite alternate;
+        }
+
+        @keyframes pulseHint {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.9; }
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-content">
+        <div class="splash-logo-container" style="width: 180px; height: 180px; position: relative; display: flex; justify-content: center; align-items: center;">
+            <!-- Obracający się i pulsujący zewnętrzny sześciokąt -->
+            <svg class="anim-hex" style="position: absolute; width: 100%; height: 100%;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" stroke="#00B050" stroke-width="5" fill="#15241d"/>
+            </svg>
+            <!-- Nieruchomy hantel i symbol w środku -->
+            <svg style="position: absolute; width: 100%; height: 100%;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="20" y1="50" x2="80" y2="50" stroke="#00B050" stroke-width="4" stroke-linecap="round"/>
+                <rect x="22" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <rect x="72" y="36" width="6" height="28" rx="2" fill="#00B050"/>
+                <path d="M30 65 L43 32 L50 46 L57 32 L70 65" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1 class="splash-title">IRONMETRIC</h1>
+        <div class="rotating-subtitle">everything counts</div>
+    </div>
+
+    <div class="hint" id="hint-text">Kliknij cokolwiek, aby włączyć bit</div>
+
+    <!-- Element Audio -->
+    <audio id="splash-audio" loop preload="auto">
+        <source src="ironmetric.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.body.addEventListener('click', function() {
+            let audio = document.getElementById('splash-audio');
+            let hint = document.getElementById('hint-text');
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    hint.textContent = 'Trwa odtwarzanie (kliknij, aby zatrzymać)';
+                }).catch(e => {
+                    console.log("Audio play blocked/error:", e);
+                });
+            } else {
+                audio.pause();
+                hint.textContent = 'Zatrzymano (kliknij, aby wznowić)';
+            }
+        });
+    </script>
+</body>
+</html>
