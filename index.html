@@ -16,9 +16,27 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             cursor: pointer;
             user-select: none;
+            position: relative;
             /* Industrialna tekstura stali z ciemnym filtrem dla maksymalnej czytelności */
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url('stal_tlo.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+
+        /* Napis po skosie WORK IN PROGRESS na pierwszym planie (40% przeźroczystości) */
+        .watermark-wip {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-35deg);
+            font-size: 7rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 10;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
         .splash-content {
@@ -26,6 +44,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .anim-hex {
@@ -76,21 +96,43 @@
 
         .hint {
             position: absolute;
-            bottom: 20px;
+            bottom: 50px;
             color: #888;
             font-size: 0.8rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             animation: pulseHint 2s infinite alternate;
+            z-index: 1;
         }
 
         @keyframes pulseHint {
             0% { opacity: 0.4; }
             100% { opacity: 0.9; }
         }
+
+        /* Styl hiperlinku testów */
+        .test-link {
+            position: absolute;
+            bottom: 20px;
+            color: #00B050;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            z-index: 15;
+            cursor: pointer;
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .test-link:hover {
+            color: #00ff70;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <!-- Napis po skosie na pierwszym planie (40% przeźroczystości) -->
+    <div class="watermark-wip">WORK IN PROGRESS</div>
+
     <div class="splash-content">
         <div class="splash-logo-container" style="width: 180px; height: 180px; position: relative; display: flex; justify-content: center; align-items: center;">
             <!-- Obracający się i pulsujący zewnętrzny sześciokąt -->
@@ -110,6 +152,9 @@
     </div>
 
     <div class="hint" id="hint-text">Kliknij cokolwiek, aby włączyć ciężki bit</div>
+    
+    <!-- Hiperlink zapraszający do testów -->
+    <a href="https://hammer75.github.io/Ironmetric_testy/" class="test-link" target="_blank" onclick="event.stopPropagation();">zapraszamy do testów</a>
 
     <!-- Element Audio -->
     <audio id="splash-audio" loop preload="auto">
